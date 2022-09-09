@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\TransactionService;
 use Illuminate\Http\Request;
@@ -11,11 +12,13 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     
+    protected $user;
     protected $userRepository;
     protected $transaction;
 
-    public function __construct(UserRepository $userRepository, TransactionService $transaction )
+    public function __construct(UserRepository $userRepository, TransactionService $transaction, User $user )
     {
+        $this->user = $user;
         $this->userRepository = $userRepository;
         $this->transaction = $transaction;
     }
@@ -97,7 +100,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
-        $user = $this->user->find($request->user_id);
+        $user = $this->user->find($request->id);
         if(!$user){
             return response()->json([
                 'error' => 'Usuário não encontrado'

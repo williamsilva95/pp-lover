@@ -50,7 +50,7 @@ class TransactionService
             throw new \Exception("Erro ao debitar");
         }
 
-        if(!$this->userRepository->deposit($payee, $amount)){
+        if(!$this->transactionRepository->deposit($payee, $amount)){
             throw new \Exception("Erro ao depositar");
         }
 
